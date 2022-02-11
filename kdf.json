@@ -1,0 +1,58 @@
+{
+    "id": "org.kde.kdf",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-21.08",
+    "sdk": "org.kde.Sdk",
+    "command": "kdf",
+    "rename-icon": "kdf",
+    "finish-args": [
+        "--device=dri",
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--filesystem=/media",
+        "--filesystem=/run/media",
+        "--device=all"
+    ],
+
+    "modules": [
+        {
+            "name": "qtbase_custom",
+            "buildsystem": "simple",
+            "build-commands": [
+                "mkdir /app/qtbase_custom",
+                "cp * /app/qtbase_custom/ -r"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "path": "/path/to/qtbase_install.tar"
+                }
+            ]
+        },
+        {
+            "name": "kdf",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/release-service/21.12.1/src/kdf-21.12.1.tar.xz",
+                    "sha256": "d1727d9d69ab0a609d018e9c1178d4cf41dd41fad09b873adb0675d2aebb2fa4"
+                },
+                {
+                    "type": "patch",
+                    "path": "kdf.appdata.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "0001-Add-feature-to-use-system-default-file-manager-to-op.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "0001-Update-settings-panel-for-Flatpak.patch"
+                }
+            ]
+        }
+
+    ]
+}
